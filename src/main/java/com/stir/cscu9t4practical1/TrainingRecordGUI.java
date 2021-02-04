@@ -119,13 +119,16 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
         int m = Integer.parseInt(month.getText());
         int d = Integer.parseInt(day.getText());
         int y = Integer.parseInt(year.getText());
-        outputArea.setText("looking up record ...");
-        String message = myAthletes.lookupEntry(d, m, y);
-        return message;
+        // outputArea.setText("looking up record ..."); // useless. not working.
+        // String message = myAthletes.lookupEntry(d, m, y); //  we can return directly the value
+        return myAthletes.lookupEntry(d, m, y);
     }
 
     public String findallEntry() {
-        return "Not implemented yet.";
+        int m = Integer.parseInt(month.getText());
+        int d = Integer.parseInt(day.getText());
+        int y = Integer.parseInt(year.getText());
+        return myAthletes.findallEntry(d, m, y);
     }
 
     public void blankDisplay() {
