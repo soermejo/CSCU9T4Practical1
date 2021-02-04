@@ -1,6 +1,7 @@
 // This class holds information about a single training session
 package com.stir.cscu9t4practical1;
 
+import java.util.Objects;
 import java.util.Calendar;
 public class Entry {
   private String name;
@@ -47,6 +48,11 @@ public class Entry {
   public float getDistance () {
     return distance;
   } //getYear
+
+  public int hash() {
+    return Objects.hash(name, getDay(), getMonth(), getYear());
+  }
+
 
   public String getEntry () {
    String result = getName()+" ran " + getDistance() + " km in "

@@ -15,8 +15,16 @@ public class TrainingRecord {
     } //constructor
     
     // add a record to the list
-   public void addEntry(Entry e){
+   public String addEntry(Entry e){
+       ListIterator<Entry> iter = tr.listIterator();
+       while (iter.hasNext()) {
+        Entry current = iter.next();
+        if (current.hash() == e.hash()) {
+            return "Entry already added !";
+        }
+       }
        tr.add(e);    
+       return "Entry added";
    } // addClass
    
    // look up the entry of a given day and month

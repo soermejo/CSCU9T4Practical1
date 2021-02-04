@@ -100,18 +100,30 @@ public class TrainingRecordGUI extends JFrame implements ActionListener {
     } // actionPerformed
 
     public String addEntry(String what) {
-        String message = "Record added\n";
-        System.out.println("Adding "+what+" entry to the records");
+        String message;
+        int m, d, y;
+        System.out.println("Trying to add "+what+" entry to the records");
         String n = name.getText();
-        int m = Integer.parseInt(month.getText());
-        int d = Integer.parseInt(day.getText());
-        int y = Integer.parseInt(year.getText());
+
+        if (n.isEmpty()) {
+            return "Name is empty! ";
+        }
+
+        try {
+            m = Integer.parseInt(month.getText());
+            d = Integer.parseInt(day.getText());
+            y = Integer.parseInt(year.getText());
+
+        } catch (NumberFormatException e) {
+            return "You must enter an integer!";
+        }
+
         float km = java.lang.Float.parseFloat(dist.getText());
         int h = Integer.parseInt(hours.getText());
         int mm = Integer.parseInt(mins.getText());
         int s = Integer.parseInt(secs.getText());
         Entry e = new Entry(n, d, m, y, h, mm, s, km);
-        myAthletes.addEntry(e);
+        message = myAthletes.addEntry(e);
         return message;
     }
     
