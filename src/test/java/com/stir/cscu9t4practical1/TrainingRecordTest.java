@@ -22,11 +22,11 @@ public class TrainingRecordTest {
     }
     
     @BeforeAll
-    public void setUpClass() {
+    public static void setUpClass() { //cfix 
     }
     
     @AfterAll
-    public void tearDownClass() {
+    public static void tearDownClass() { // fix
     }
     
     @BeforeEach

@@ -24,7 +24,7 @@ public class TrainingRecord {
         }
        }
        tr.add(e);    
-       return "Entry added";
+       return "Record added\n";
    } // addClass
    
    // look up the entry of a given day and month
