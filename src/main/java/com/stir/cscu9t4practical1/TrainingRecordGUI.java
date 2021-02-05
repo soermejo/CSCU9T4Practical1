@@ -53,11 +53,32 @@ public class TrainingRecordGUI implements ActionListener {
     JComboBox cbTerrain = new JComboBox(); // Terrain dropdown menu
     JComboBox cbTempo = new JComboBox(); // Tempo dropdown menu
 
+
+    // Buttons
+    JButton btnAdd = new JButton("Add"); // Add entry button
+    JButton btnLookup = new JButton("Look Up"); // Look up button
+    JButton btnFindAll = new JButton("Find All"); // Find all button
+    JButton btnRemove = new JButton("Remove"); // Remove button to be implemented
+
+    // Text fields 
+    JFormattedTextField tbDistance = new JFormattedTextField();
+    JFormattedTextField tbSeconds = new JFormattedTextField();
+    JFormattedTextField tbMinutes = new JFormattedTextField();
+    JFormattedTextField tbHour = new JFormattedTextField();
+    JFormattedTextField tbDay = new JFormattedTextField();
+    JFormattedTextField tbMonth = new JFormattedTextField();
+    JFormattedTextField tbYear = new JFormattedTextField();
+    JFormattedTextField tbName = new JFormattedTextField();
+
     JFormattedTextField tbRecovery = new JFormattedTextField();
     JFormattedTextField tbLaps = new JFormattedTextField();
 
     private LinkedHashMap<Integer, ArrayList<JComponent>> jmap = new LinkedHashMap<>();
-    
+    private ArrayList<JFormattedTextField> jfields = new ArrayList<>();
+
+
+    // Instance Training Record
+    private TrainingRecord myAthletes = new TrainingRecord();
 
     /**
      * Launch the application.
@@ -105,15 +126,15 @@ public class TrainingRecordGUI implements ActionListener {
 
         jSwim.add(rbPool);
         jSwim.add(rbOutdoor);
-        jmap.put(2, jSwim);
+        jmap.put(2, jSwim); // acrtivity 2 for swim
 
         jCycle.add(cbTerrain);
         jCycle.add(cbTempo);
-        jmap.put(3, jCycle);
+        jmap.put(3, jCycle); // activity 3 for cycle
 
         jSprint.add(tbRecovery);
         jSprint.add(tbLaps);
-        jmap.put(1, jSprint);
+        jmap.put(1, jSprint); // activity 1 for sprint
 
         jmap.put(0, jRun); // default so empty
 
@@ -150,7 +171,6 @@ public class TrainingRecordGUI implements ActionListener {
 		lblNewLabel_9_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setEnabled(false);
 		panel_2.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		JLabel lblNewLabel_9_1_1 = new JLabel("Cycle");
@@ -217,17 +237,10 @@ public class TrainingRecordGUI implements ActionListener {
 					.addContainerGap())
 		);
 		
-		JButton btnAdd = new JButton("Add"); // Add entry button
 		btnAdd.addActionListener(this); // Add to event listener
-		btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
-		
-        JButton btnLookup = new JButton("Look Up"); // Look up button
+        btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
         btnLookup.addActionListener(this); // Add to event listener
-		
-        JButton btnFindAll = new JButton("Find All"); // Find all button
         btnFindAll.addActionListener(this); // Add to event listener
-		
-        JButton btnRemove = new JButton("Remove"); // Remove button to be implemented
         btnRemove.addActionListener(this); // Add to event listener
         btnRemove.setHorizontalAlignment(SwingConstants.RIGHT);
         
@@ -305,10 +318,12 @@ public class TrainingRecordGUI implements ActionListener {
         
         // Sprint add 
 		JLabel lblNewLabel_10 = new JLabel("Recovery (minutes)"); // Recovery time in minutes
-		tbRecovery.setColumns(3);
+        tbRecovery.setColumns(3);
+        jfields.add(tbRecovery); //add tb recovery to jfields
 		
 		JLabel lblNewLabel_13 = new JLabel("Laps"); // Laps 
         tbLaps.setColumns(3);
+        jfields.add(tbLaps); //add tb recovery to jfields
         
 
 		GroupLayout gl_pnlRun = new GroupLayout(pnlRun);
@@ -375,45 +390,38 @@ public class TrainingRecordGUI implements ActionListener {
         cbActivity.addActionListener(this); // Add dropdown activity menu to event listener
 		
 		JLabel lblNewLabel = new JLabel("Name");
-		
-		JFormattedTextField tbName = new JFormattedTextField();
-		tbName.setColumns(30);
+        tbName.setColumns(30);
+        jfields.add(tbName); // add to jfields
 		
 		JLabel lblNewLabel_1 = new JLabel("Year");
-		
-		JFormattedTextField formattedTextField_1 = new JFormattedTextField();
-		formattedTextField_1.setColumns(4);
+        tbYear.setColumns(4);
+        jfields.add(tbYear);
 		
 		JLabel lblNewLabel_2 = new JLabel("Month");
+        tbMonth.setColumns(2);
+        jfields.add(tbMonth); // add to jfields
 		
-		JFormattedTextField tbMonth = new JFormattedTextField();
-		tbMonth.setColumns(2);
+		JLabel lblNewLabel_3 = new JLabel("Day");		
+        tbDay.setColumns(2);
+        jfields.add(tbDay); // add to jfields
 		
-		JLabel lblNewLabel_3 = new JLabel("Day");
+		JLabel lblNewLabel_4 = new JLabel("Hour");	
+        tbHour.setColumns(2);
+        jfields.add(tbHour); // add to jfields
 		
-		JFormattedTextField tbDay = new JFormattedTextField();
-		tbDay.setColumns(2);
+		JLabel lblNewLabel_5 = new JLabel("Minutes");	
+        tbMinutes.setColumns(2);
+        jfields.add(tbMinutes); // add to jfields
 		
-		JLabel lblNewLabel_4 = new JLabel("Hour");
-		
-		JFormattedTextField tbHour = new JFormattedTextField();
-		tbHour.setColumns(2);
-		
-		JLabel lblNewLabel_5 = new JLabel("Minutes");
-		
-		JFormattedTextField tbMinutes = new JFormattedTextField();
-		tbMinutes.setColumns(2);
-		
-		JLabel lblNewLabel_6 = new JLabel("Seconds");
-		
-		JFormattedTextField tbSeconds = new JFormattedTextField();
-		tbSeconds.setColumns(2);
+		JLabel lblNewLabel_6 = new JLabel("Seconds");	
+        tbSeconds.setColumns(2);
+        jfields.add(tbSeconds); // add to jfields
 		
         JLabel lblNewLabel_7 = new JLabel("Distance (meters)");
-        
-		
-		JFormattedTextField tbDiostance = new JFormattedTextField();
-		tbDiostance.setColumns(6);
+        tbDistance.setColumns(6);
+        jfields.add(tbDistance); // add to jfields
+
+
 		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
 		gl_panel_1.setHorizontalGroup(
 			gl_panel_1.createParallelGroup(Alignment.LEADING)
@@ -439,7 +447,7 @@ public class TrainingRecordGUI implements ActionListener {
 							.addGap(4)
 							.addComponent(lblNewLabel_7)
 							.addGap(4)
-							.addComponent(tbDiostance, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(tbDistance, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addComponent(lblNewLabel)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -447,7 +455,7 @@ public class TrainingRecordGUI implements ActionListener {
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblNewLabel_1)
 							.addGap(4)
-							.addComponent(formattedTextField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(tbYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(4)
 							.addComponent(lblNewLabel_2)
 							.addGap(4)
@@ -469,7 +477,7 @@ public class TrainingRecordGUI implements ActionListener {
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGap(3)
 							.addComponent(lblNewLabel_1))
-						.addComponent(formattedTextField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(tbYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGap(3)
 							.addComponent(lblNewLabel_2))
@@ -499,7 +507,7 @@ public class TrainingRecordGUI implements ActionListener {
 						.addGroup(gl_panel_1.createSequentialGroup()
 							.addGap(3)
 							.addComponent(lblNewLabel_7))
-						.addComponent(tbDiostance, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(tbDistance, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(13))
 		);
 		panel_1.setLayout(gl_panel_1);
@@ -515,16 +523,18 @@ public class TrainingRecordGUI implements ActionListener {
     }
 
     private void jEnable(int jType) {
-        jDisableAll();
+        jDisableAll(); // Disable all the controls
         for (JComponent j: jmap.get(jType)) {
             j.setEnabled(true);
         }
     }
 
+
 	@Override
 	public void actionPerformed(ActionEvent event) {
-		System.out.println(event.getSource());
-        textPane.setText("ciao");
+        System.out.println(event.getSource());
+        String message = "";
+        Integer currentEntry = cbActivity.getSelectedIndex();
         
         // Activity
         if (event.getSource() == cbActivity) {
@@ -532,7 +542,72 @@ public class TrainingRecordGUI implements ActionListener {
             System.out.println(cbActivity.getSelectedIndex());
             jEnable(cbActivity.getSelectedIndex());
         }
+       
 
+       // buttons events
+       if (event.getSource() instanceof JButton) {
+           if (event.getSource() == btnAdd) {
+                message = addEntry(currentEntry.toString());
+           } else if (event.getSource() == btnFindAll) {
+                message = findallEntry();
+           } else if (event.getSource() == btnLookup) {
+                message = lookupEntry();
+           }
+           blankDisplay(); // clear display
+       }
+
+       textPane.setText(message); // Show output 
 		
-	}
+    }
+
+    public String addEntry(String what) {
+        String message;
+        int m, d, y;
+        System.out.println("Trying to add "+what+" entry to the records");
+        String n = tbName.getText();
+
+        if (n.isEmpty()) {
+            return "Name is empty! ";
+        }
+
+        try {
+            m = Integer.parseInt(tbMonth.getText());
+            d = Integer.parseInt(tbDay.getText());
+            y = Integer.parseInt(tbYear.getText());
+
+        } catch (NumberFormatException e) {
+            return "You must enter an integer!";
+        }
+
+        float km = java.lang.Float.parseFloat(tbDistance.getText());
+        int h = Integer.parseInt(tbHour.getText());
+        int mm = Integer.parseInt(tbMinutes.getText());
+        int s = Integer.parseInt(tbSeconds.getText());
+        Entry e = new Entry(n, d, m, y, h, mm, s, km);
+        message = myAthletes.addEntry(e);
+        return message;
+    }
+
+    public String lookupEntry() {
+        int m = Integer.parseInt(tbMonth.getText());
+        int d = Integer.parseInt(tbDay.getText());
+        int y = Integer.parseInt(tbYear.getText());
+        // outputArea.setText("looking up record ..."); // useless. not working.
+        // String message = myAthletes.lookupEntry(d, m, y); //  we can return directly the value
+        return myAthletes.lookupEntry(d, m, y);
+    }
+
+    public String findallEntry() {
+        int m = Integer.parseInt(tbMonth.getText());
+        int d = Integer.parseInt(tbDay.getText());
+        int y = Integer.parseInt(tbYear.getText());
+        return myAthletes.findallEntry(d, m, y);
+    }
+    
+
+    public void blankDisplay() {
+        for (JFormattedTextField j: jfields) {
+            j.setText("");
+        }
+    }
 }
