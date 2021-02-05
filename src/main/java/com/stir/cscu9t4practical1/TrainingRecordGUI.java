@@ -609,5 +609,16 @@ public class TrainingRecordGUI implements ActionListener {
         for (JFormattedTextField j: jfields) {
             j.setText("");
         }
-    }
+	}
+	
+	public void fillDisplay(Entry ent) {
+		tbName.setText(ent.getName());
+		tbDay.setText(String.valueOf(ent.getDay()));
+        tbMonth.setText(String.valueOf(ent.getMonth()));
+        tbYear.setText(String.valueOf(ent.getYear()));
+        tbHour.setText(String.valueOf(ent.getHour()));
+        tbMinutes.setText(String.valueOf(ent.getMin()));
+        tbSeconds.setText(String.valueOf(ent.getSec()));
+        tbDistance.setText(String.valueOf(ent.getDistance()));
+	}
 }
