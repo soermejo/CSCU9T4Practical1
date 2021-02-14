@@ -34,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.util.LinkedHashMap; // import the HashMap class
 import java.util.regex.Pattern;
 import java.util.ArrayList; // import the ArrayList class
+import javax.swing.plaf.FontUIResource;
 
 public class TrainingRecordGUI implements ActionListener {
 
@@ -80,31 +81,68 @@ public class TrainingRecordGUI implements ActionListener {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+            setFont(new FontUIResource(new Font("Cabin", Font.PLAIN, 10)));
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 
 				try {
-					// Set cross-platform Java L&F (also called "Metal")
-					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-				} catch (UnsupportedLookAndFeelException e) {
-					// handle exception
-				} catch (ClassNotFoundException e) {
-					// handle exception
-				} catch (InstantiationException e) {
-					// handle exception
-				} catch (IllegalAccessException e) {
-					// handle exception
-				}
-
-				try {
 					TrainingRecordGUI window = new TrainingRecordGUI();
 					window.frame.setVisible(true);
+					System.out.println(UIManager.getLookAndFeel().getName());
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
+        
+        private static void setFont(FontUIResource myFont) {
+            UIManager.put("CheckBoxMenuItem.acceleratorFont", myFont);
+            UIManager.put("Button.font", myFont);
+            UIManager.put("ToggleButton.font", myFont);
+            UIManager.put("RadioButton.font", myFont);
+            UIManager.put("CheckBox.font", myFont);
+            UIManager.put("ColorChooser.font", myFont);
+            UIManager.put("ComboBox.font", myFont);
+            UIManager.put("Label.font", myFont);
+            UIManager.put("List.font", myFont);
+            UIManager.put("MenuBar.font", myFont);
+            UIManager.put("Menu.acceleratorFont", myFont);
+            UIManager.put("RadioButtonMenuItem.acceleratorFont", myFont);
+            UIManager.put("MenuItem.acceleratorFont", myFont);
+            UIManager.put("MenuItem.font", myFont);
+            UIManager.put("RadioButtonMenuItem.font", myFont);
+            UIManager.put("CheckBoxMenuItem.font", myFont);
+            UIManager.put("OptionPane.buttonFont", myFont);
+            UIManager.put("OptionPane.messageFont", myFont);
+            UIManager.put("Menu.font", myFont);
+            UIManager.put("PopupMenu.font", myFont);
+            UIManager.put("OptionPane.font", myFont);
+            UIManager.put("Panel.font", myFont);
+            UIManager.put("ProgressBar.font", myFont);
+            UIManager.put("ScrollPane.font", myFont);
+            UIManager.put("Viewport.font", myFont);
+            UIManager.put("TabbedPane.font", myFont);
+            UIManager.put("Slider.font", myFont);
+            UIManager.put("Table.font", myFont);
+            UIManager.put("TableHeader.font", myFont);
+            UIManager.put("TextField.font", myFont);
+            UIManager.put("Spinner.font", myFont);
+            UIManager.put("PasswordField.font", myFont);
+            UIManager.put("TextArea.font", myFont);
+            UIManager.put("TextPane.font", myFont);
+            UIManager.put("EditorPane.font", myFont);
+            UIManager.put("TabbedPane.smallFont", myFont);
+            UIManager.put("TitledBorder.font", myFont);
+            UIManager.put("ToolBar.font", myFont);
+            UIManager.put("ToolTip.font", myFont);
+            UIManager.put("Tree.font", myFont);
+            UIManager.put("FormattedTextField.font", myFont);
+            UIManager.put("IconButton.font", myFont);
+            UIManager.put("InternalFrame.optionDialogTitleFont", myFont);
+            UIManager.put("InternalFrame.paletteTitleFont", myFont);
+            UIManager.put("InternalFrame.titleFont", myFont);
+        }
 
 	/**
 	 * Create the application.
@@ -226,7 +264,7 @@ public class TrainingRecordGUI implements ActionListener {
 																		.addGroup(gl_panel
 																				.createParallelGroup(Alignment.LEADING)
 																				.addComponent(lblNewLabel_9_1_1,
-																						GroupLayout.PREFERRED_SIZE, 30,
+																						GroupLayout.PREFERRED_SIZE, 50,
 																						GroupLayout.PREFERRED_SIZE)
 																				.addComponent(panel_2,
 																						GroupLayout.PREFERRED_SIZE, 150,
@@ -305,11 +343,11 @@ public class TrainingRecordGUI implements ActionListener {
 				gl_panel_2.createSequentialGroup().addContainerGap().addGroup(gl_panel_2
 						.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_panel_2.createSequentialGroup()
-								.addComponent(cbTerrain, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+								.addComponent(cbTerrain, GroupLayout.PREFERRED_SIZE, 18,
 										GroupLayout.PREFERRED_SIZE)
 								.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
-										.addComponent(cbTempo, GroupLayout.PREFERRED_SIZE, 20,
+										.addComponent(cbTempo, GroupLayout.PREFERRED_SIZE, 18,
 												GroupLayout.PREFERRED_SIZE)
 										.addComponent(lblNewLabel_12)))
 						.addComponent(lblNewLabel_11, Alignment.LEADING)).addContainerGap()));
@@ -448,9 +486,9 @@ public class TrainingRecordGUI implements ActionListener {
 				.createSequentialGroup().addContainerGap()
 				.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel_1.createSequentialGroup().addComponent(lblNewLabel_8)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(cbActivity, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED).addComponent(lblNewLabel_4).addGap(4)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(cbActivity, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+								.addGap(4).addComponent(lblNewLabel_4).addGap(4)
 								.addComponent(tbHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
 								.addGap(4).addComponent(lblNewLabel_5).addGap(4)
@@ -466,7 +504,7 @@ public class TrainingRecordGUI implements ActionListener {
 								gl_panel_1.createSequentialGroup().addComponent(lblNewLabel)
 										.addPreferredGap(ComponentPlacement.RELATED)
 										.addComponent(tbName, GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(lblNewLabel_1)
+										.addGap(4).addComponent(lblNewLabel_1)
 										.addGap(4)
 										.addComponent(tbYear, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 												GroupLayout.PREFERRED_SIZE)
@@ -495,7 +533,7 @@ public class TrainingRecordGUI implements ActionListener {
 						.addPreferredGap(ComponentPlacement.UNRELATED)
 						.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE).addComponent(lblNewLabel_8)
-										.addComponent(cbActivity, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										.addComponent(cbActivity, GroupLayout.PREFERRED_SIZE, 18,
 												GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_panel_1.createSequentialGroup().addGap(3).addComponent(lblNewLabel_4))
 								.addComponent(tbHour, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
