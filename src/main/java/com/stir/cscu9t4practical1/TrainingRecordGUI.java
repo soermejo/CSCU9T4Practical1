@@ -1,5 +1,6 @@
 // GUI and main program for the Training Record
 package com.stir.cscu9t4practical1;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,34 +16,31 @@ import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JRadioButton;
 import java.awt.GridLayout;
-import javax.swing.JCheckBox;
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.Component;
-import javax.swing.Box;
-import javax.swing.JInternalFrame;
 import javax.swing.border.LineBorder;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 import java.awt.Color;
 import java.awt.Font;
-import javax.swing.border.CompoundBorder;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 import java.util.LinkedHashMap; // import the HashMap class
+import java.util.regex.Pattern;
 import java.util.ArrayList; // import the ArrayList class
 
 
 public class TrainingRecordGUI implements ActionListener {
 
-    private JFrame frame;
+	private JFrame frame;
+	private Pattern numPattern = Pattern.compile("^[+]?\\d+([.]\\d+)?$"); // numbers only re pattern
+	private Pattern positiveIntPattern = Pattern.compile("^[0-9]\\d*$"); // positive numbers re pattern excluding 0
     private final ButtonGroup bgSwim = new ButtonGroup();
     private JTextPane textPane = new JTextPane();
     private JComboBox cbActivity = new JComboBox();
@@ -58,7 +56,8 @@ public class TrainingRecordGUI implements ActionListener {
     JButton btnAdd = new JButton("Add"); // Add entry button
     JButton btnLookup = new JButton("Look Up"); // Look up button
     JButton btnFindAll = new JButton("Find All"); // Find all button
-    JButton btnRemove = new JButton("Remove"); // Remove button to be implemented
+	JButton btnRemove = new JButton("Remove"); // Remove button 
+	JButton btnWDist = new JButton("Weekly Distance"); // Remove button
 
     // Text fields 
     JFormattedTextField tbDistance = new JFormattedTextField();
@@ -241,7 +240,8 @@ public class TrainingRecordGUI implements ActionListener {
         btnAdd.setHorizontalAlignment(SwingConstants.LEFT);
         btnLookup.addActionListener(this); // Add to event listener
         btnFindAll.addActionListener(this); // Add to event listener
-        btnRemove.addActionListener(this); // Add to event listener
+		btnRemove.addActionListener(this); // Add to event listener
+		btnWDist.addActionListener(this); // Add to event listener
         btnRemove.setHorizontalAlignment(SwingConstants.RIGHT);
         
 		GroupLayout gl_panel_4 = new GroupLayout(panel_4);
@@ -254,7 +254,9 @@ public class TrainingRecordGUI implements ActionListener {
 					.addComponent(btnLookup)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnFindAll)
-					.addGap(189)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnWDist)
+					.addGap(70) //.addGap(189)
 					.addComponent(btnRemove)
 					.addContainerGap())
 		);
@@ -267,6 +269,7 @@ public class TrainingRecordGUI implements ActionListener {
 				.addGroup(Alignment.TRAILING, gl_panel_4.createSequentialGroup()
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(gl_panel_4.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnWDist)
 						.addComponent(btnFindAll)
 						.addComponent(btnLookup)
 						.addComponent(btnAdd))
@@ -359,8 +362,15 @@ public class TrainingRecordGUI implements ActionListener {
         
         // Swim add 
 		bgSwim.add(rbPool);
-        bgSwim.add(rbOutdoor);
-        
+		bgSwim.add(rbOutdoor);
+		
+		// Action command
+		rbPool.setActionCommand("pool");
+		rbOutdoor.setActionCommand("outdoor");
+
+		// Set radio button pool as default
+		rbPool.setSelected(true);
+
 		GroupLayout gl_pnlSwing = new GroupLayout(pnlSwing);
 		gl_pnlSwing.setHorizontalGroup(
 			gl_pnlSwing.createParallelGroup(Alignment.LEADING)
@@ -394,30 +404,51 @@ public class TrainingRecordGUI implements ActionListener {
         jfields.add(tbName); // add to jfields
 		
 		JLabel lblNewLabel_1 = new JLabel("Year");
-        tbYear.setColumns(4);
+		tbYear.setColumns(4);
+		javax.swing.text.NumberFormatter yearFormatter = new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##"));
+		yearFormatter.setMaximum(9999);
+		tbYear.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(yearFormatter));
+	
         jfields.add(tbYear);
 		
 		JLabel lblNewLabel_2 = new JLabel("Month");
-        tbMonth.setColumns(2);
+		tbMonth.setColumns(2);
+		javax.swing.text.NumberFormatter monthFormatter = new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##"));
+		monthFormatter.setMaximum(12);
+		monthFormatter.setMinimum(1);
+		tbMonth.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(monthFormatter));
         jfields.add(tbMonth); // add to jfields
 		
 		JLabel lblNewLabel_3 = new JLabel("Day");		
-        tbDay.setColumns(2);
+		tbDay.setColumns(2);
+		javax.swing.text.NumberFormatter dayFormatter = new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##"));
+		dayFormatter.setMaximum(31);
+		dayFormatter.setMinimum(1);
+		tbDay.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(dayFormatter));
         jfields.add(tbDay); // add to jfields
 		
 		JLabel lblNewLabel_4 = new JLabel("Hour");	
-        tbHour.setColumns(2);
+		tbHour.setColumns(2);
+		javax.swing.text.NumberFormatter hourFormatter = new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##"));
+		hourFormatter.setMaximum(23);
+		hourFormatter.setMinimum(0);
+		tbHour.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(hourFormatter));
         jfields.add(tbHour); // add to jfields
 		
 		JLabel lblNewLabel_5 = new JLabel("Minutes");	
-        tbMinutes.setColumns(2);
+		tbMinutes.setColumns(2);
+		javax.swing.text.NumberFormatter minSecFormatter = new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("##"));
+		minSecFormatter.setMaximum(59);
+		minSecFormatter.setMinimum(0);
+		tbMinutes.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(minSecFormatter));
         jfields.add(tbMinutes); // add to jfields
 		
 		JLabel lblNewLabel_6 = new JLabel("Seconds");	
-        tbSeconds.setColumns(2);
+		tbSeconds.setColumns(2);
+		tbSeconds.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(minSecFormatter));
         jfields.add(tbSeconds); // add to jfields
 		
-        JLabel lblNewLabel_7 = new JLabel("Distance (meters)");
+        JLabel lblNewLabel_7 = new JLabel("Distance (Km)");
         tbDistance.setColumns(6);
         jfields.add(tbDistance); // add to jfields
 
@@ -513,7 +544,29 @@ public class TrainingRecordGUI implements ActionListener {
 		panel_1.setLayout(gl_panel_1);
 		panel.setLayout(gl_panel);
 	}
-    
+
+
+	public String getSelectedSwim() {
+        return this.bgSwim.getSelection().getActionCommand();
+
+	}
+
+	public boolean isNumeric(String strNum) {
+		if (strNum == null) {
+			return false; 
+		}
+		return numPattern.matcher(strNum).matches();
+	}
+
+	public boolean isPositive (String strNum) {
+		if (strNum == null) {
+			return false; 
+		}
+		
+		return positiveIntPattern.matcher(strNum).matches();
+	}
+	
+
     private void jDisableAll() {
         for (ArrayList<JComponent> jl: jmap.values()) {
             for (JComponent j: jl) {
@@ -532,14 +585,12 @@ public class TrainingRecordGUI implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent event) {
-        System.out.println(event.getSource());
         String message = "";
         Integer currentEntry = cbActivity.getSelectedIndex();
         
         // Activity
         if (event.getSource() == cbActivity) {
             System.out.println("cbActivity fired up!");
-            System.out.println(cbActivity.getSelectedIndex());
             jEnable(cbActivity.getSelectedIndex());
         }
        
@@ -547,28 +598,140 @@ public class TrainingRecordGUI implements ActionListener {
        // buttons events
        if (event.getSource() instanceof JButton) {
            if (event.getSource() == btnAdd) {
-                message = addEntry(currentEntry.toString());
+				message = validateInput(currentEntry);
+				if (message.equals("ok")) 
+					message = addEntry(currentEntry);
            } else if (event.getSource() == btnFindAll) {
-                message = findallEntry();
+				message=checkBlankInput("findall");
+				if (message.equals("ok")) 
+                	message = findallEntry();
            } else if (event.getSource() == btnLookup) {
-                message = lookupEntry();
-           }
+				message=checkBlankInput("lookup");
+				if (message.equals("ok")) 
+                	message = lookupEntry();
+           } else if (event.getSource() == btnRemove) {
+				message=checkBlankInput("remove");
+				if (message.equals("ok")) 
+			    	message = removeEntry();
+		   } else if (event.getSource() == btnWDist) {
+				message=checkBlankInput("weeklydistance");
+				if (message.equals("ok")) 
+					message = "Weekly distance is " + Float.toString(weeklyDistance());
+	   	   }
            blankDisplay(); // clear display
        }
 
        textPane.setText(message); // Show output 
 		
-    }
+	}
 
-    public String addEntry(String what) {
+	public Entry dispatchEntry(Integer entityType, String n, int d, int m, int y, int h, int mm, int s, float km) {
+		Entry entry = null; // need initilization
+
+		switch (entityType) {
+			case 0: // Run
+				entry = new Entry(n, d, m, y, h, mm, s, km);
+				//myAthletes.addEntry(entry);
+				break;
+				
+            case 1: // Sprint
+                int recover = Integer.parseInt(tbRecovery.getText());
+                int laps = Integer.parseInt(tbLaps.getText());
+                entry = new SprintEntry(n, d, m, y, h, mm, s, km, laps, recover);
+				//myAthletes.addEntry(entry);
+				break;
+
+            case 2: // Swim
+                String where = getSelectedSwim();
+                entry = new SwimEntry(n, d, m, y, h, mm, s, km, where);
+				//myAthletes.addEntry(entry);
+				break;
+				
+			case 3: // Cycle
+                String tempo = cbTempo.getSelectedItem().toString();
+                String terrain = cbTerrain.getSelectedItem().toString();
+                entry = new CycleEntry(n, d, m, y, h, mm, s, km, terrain, tempo);
+				//myAthletes.addEntry(entry);
+				break;
+
+			default:
+				break;
+		} 
+		
+		return entry;
+
+	}
+
+	public String checkBlankInput(String op)
+	{
+		boolean res=false;
+		if(op.equals("lookup") || op.equals("remove"))
+		{
+			res = !(tbName.getText().isBlank() ||  tbDay.getText().isBlank() || tbMonth.getText().isBlank() || tbYear.getText().isBlank());
+		} else if (op.equals("findall"))
+		{
+			res = !(tbDay.getText().isBlank() || tbMonth.getText().isBlank() || tbYear.getText().isBlank());
+		}else if (op.equals("weeklydistance"))
+		{
+			res = !(tbName.getText().isBlank());
+		}
+		if (!res) {return "You need to input all the required fields.";}
+		return "ok";
+
+	}
+	public String checkBlankInput(int entityType) {
+
+		boolean res = !(tbName.getText().isBlank() || tbDistance.getText().isBlank() || tbSeconds.getText().isBlank() || 
+			tbMinutes.getText().isBlank() || tbHour.getText().isBlank() || tbDay.getText().isBlank() || 
+			tbMonth.getText().isBlank() || tbYear.getText().isBlank());
+		
+		if (entityType == 2) { // Sprint 
+			res = res && !(tbRecovery.getText().isBlank() || tbLaps.getText().isBlank());
+		}
+
+		if (!res) {return "You need to input all the required fields.";}
+		return "ok";
+
+	}
+
+	public String checkIntInput(int entityType) {
+		boolean res = (isNumeric(tbDistance.getText()) && isNumeric(tbSeconds.getText()) && 
+			isNumeric(tbMinutes.getText()) && isNumeric(tbHour.getText()) && isNumeric(tbDay.getText()) && 
+			isNumeric(tbMonth.getText()) && isNumeric(tbYear.getText()));
+		
+		if (entityType == 2) { // Sprint 
+			res = res && !(isNumeric(tbRecovery.getText()) && isNumeric(tbLaps.getText()));
+		}
+
+		if (!res) {return "You must input a numeric value.";}
+		return "ok";
+	}
+
+	public String checkDateValidation() {
+		boolean res = (isPositive(tbSeconds.getText()) && isPositive(tbMinutes.getText()) && isPositive(tbHour.getText()) && isPositive(tbDay.getText()) && 
+			isPositive(tbMonth.getText()) && isPositive(tbYear.getText()));
+		if (res) return "ok";
+		return "Date is invalid.";
+	}
+
+	public String validateInput(int entityType) {
+		String message;
+		message = checkBlankInput(entityType); // Blank check
+		if (message.equals("ok"))  
+			message = checkIntInput(entityType); // Number validation
+		if (message.equals("ok")) 
+			message = checkDateValidation(); // Date validation
+		return message;
+	}
+	
+
+
+
+    public String addEntry(Integer entityType) {
         String message;
         int m, d, y;
-        System.out.println("Trying to add "+what+" entry to the records");
+        System.out.println("Trying to add " + entityType + " entry to the records");
         String n = tbName.getText();
-
-        if (n.isEmpty()) {
-            return "Name is empty! ";
-        }
 
         try {
             m = Integer.parseInt(tbMonth.getText());
@@ -582,8 +745,9 @@ public class TrainingRecordGUI implements ActionListener {
         float km = java.lang.Float.parseFloat(tbDistance.getText());
         int h = Integer.parseInt(tbHour.getText());
         int mm = Integer.parseInt(tbMinutes.getText());
-        int s = Integer.parseInt(tbSeconds.getText());
-        Entry e = new Entry(n, d, m, y, h, mm, s, km);
+		int s = Integer.parseInt(tbSeconds.getText());
+		
+        Entry e = dispatchEntry(entityType, n, d, m, y, h, mm, s, km);
         message = myAthletes.addEntry(e);
         return message;
     }
@@ -602,9 +766,21 @@ public class TrainingRecordGUI implements ActionListener {
         int d = Integer.parseInt(tbDay.getText());
         int y = Integer.parseInt(tbYear.getText());
         return myAthletes.findallEntry(d, m, y);
+	}
+	
+	public String removeEntry() {
+		String name = tbName.getText();
+        int m = Integer.parseInt(tbMonth.getText());
+        int d = Integer.parseInt(tbDay.getText());
+        int y = Integer.parseInt(tbYear.getText());
+        return myAthletes.removeEntry(name, d, m, y);
     }
     
-
+	public float weeklyDistance() {
+		String name = tbName.getText();
+		return myAthletes.weeklyDistance(name);
+	}
+	
     public void blankDisplay() {
         for (JFormattedTextField j: jfields) {
             j.setText("");

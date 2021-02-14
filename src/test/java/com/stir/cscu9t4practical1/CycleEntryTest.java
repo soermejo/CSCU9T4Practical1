@@ -37,13 +37,6 @@ public class CycleEntryTest {
     public void tearDown() {
     }
 
-    @Test
-    public void test() {
-        System.out.print("ciao");
-        String a = "1";
-        assertEquals("1", a);
-    }
-
     /**
      * Test of getName method, of class CycleEntry.
      */

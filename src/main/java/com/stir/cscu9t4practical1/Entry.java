@@ -4,6 +4,7 @@ package com.stir.cscu9t4practical1;
 import java.util.Objects;
 import java.util.Calendar;
 
+// Considered as default entry (run)
 public class Entry {
   private String name;
   private Calendar dateAndTime;

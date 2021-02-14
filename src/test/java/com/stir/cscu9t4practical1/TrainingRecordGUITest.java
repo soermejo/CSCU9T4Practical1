@@ -90,7 +90,7 @@ public class TrainingRecordGUITest {
         TrainingRecordGUI instance = new TrainingRecordGUI();
         Entry entry = new Entry("Alice", 1, 2, 2003, 0, 16, 7, 3);
         instance.fillDisplay(entry);
-        String message = instance.addEntry("generic");
+        String message = instance.addEntry(0); // generic entry is 0
         System.out.println(message);
         assertEquals(message,"Record added\n");
     }
@@ -103,8 +103,10 @@ public class TrainingRecordGUITest {
         System.out.println("Check if you have added the buttons"); 
         TrainingRecordGUI instance = new TrainingRecordGUI();
         Class<?> instanceClass = instance.getClass();
-        String[] expectedFields = {"findAllByDate","lookUpByDate"}; // add RemoveEntry when it is ready
+        // Added test for all the buttons present in the GUI ( i changed the default names in the GUI )
+        String[] expectedFields = {"btnFindAll","btnLookup", "btnRemove", "btnAdd", "btnWDist"}; // add RemoveEntry when it is ready
         Field fields[] = instanceClass.getDeclaredFields();
+        
         int found = 0;
         for (Field field : fields) {
             if (Arrays.asList(expectedFields).contains(field.getName())){
