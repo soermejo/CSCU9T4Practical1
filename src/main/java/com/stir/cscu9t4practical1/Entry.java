@@ -4,7 +4,10 @@ package com.stir.cscu9t4practical1;
 import java.util.Objects;
 import java.util.Calendar;
 
-// Considered as default entry (run)
+/**
+ * Default entry class
+ * note that Run is considered as default Entry type
+ */
 public class Entry {
   private String name;
   private Calendar dateAndTime;
@@ -64,6 +67,9 @@ public class Entry {
 } // Entry
 
 
+/**
+ * SwimEntry subclass which extends Entry superclass
+ */
 class SwimEntry extends Entry {
   String where;
 
@@ -85,6 +91,9 @@ class SwimEntry extends Entry {
 
 }
 
+/**
+ * CycleEntry subclass which extends Entry superclass
+ */
 class CycleEntry extends Entry {
   String terrain;
   String tempo;
@@ -110,7 +119,9 @@ class CycleEntry extends Entry {
 
 }
 
-
+/**
+ * SprintEntry subclass which extends Entry superclass
+ */
 class SprintEntry extends Entry {
   int recovery;
   int repetitions;
