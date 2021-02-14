@@ -76,7 +76,7 @@ public class TrainingRecordTest {
     public void testLookupEntry() {
         System.out.println("lookupEntry");
         TrainingRecord instance = new TrainingRecord();
-        String expResult = "No entries found";
+        String expResult = "Sorry couldn't find anything for this date";
         Entry a = new Entry("Alice", 1, 2, 2003, 0, 16, 7, 3);
         Entry b = new Entry("Bob", 1, 2, 2003, 0, 14, 15, 3);
         Entry c1 = new Entry("Claire", 7, 3, 2010, 0, 26, 20, 7);
@@ -132,15 +132,13 @@ public class TrainingRecordTest {
         Entry b = new Entry("Bob", 1, 2, 2003, 0, 14, 15, 3);
         instance.addEntry(a);
         instance.addEntry(b);
-        fail("This method cannot be tested as it does not exist yet");
         int d = 1;
         int m = 2;
         int y = 2003;
-        // un-comment the lines below when you've implemented the method
-//        String resultSuccess = instance.lookupEntries(d,m,y);
-//        String resultNone = instance.lookupEntries(d,m,1999);
-//        assertEquals(expectResultsNone,resultNone);
-//        assertEquals(expectResults,resultSuccess);
+        String resultSuccess = instance.findallEntry(d,m,y);
+        String resultNone = instance.findallEntry(d,m,1999);
+        assertEquals(expectResultsNone,resultNone);
+        assertEquals(expectResults,resultSuccess);
     }
     
 }
