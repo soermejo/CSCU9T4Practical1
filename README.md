@@ -8,4 +8,4 @@ Use [this version instead](https://github.com/soermejo/CSCU9T4Practical1/tree/li
 
 # Apple
 Don't know. Don't have a macbook to try with.
-
+BUT... you can try wit the linux version :)
